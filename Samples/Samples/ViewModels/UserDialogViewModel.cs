@@ -7,33 +7,29 @@ using Acr.XamForms.ViewModels;
 using Xamarin.Forms;
 
 
-namespace Samples.ViewModels
-{
+namespace Samples.ViewModels {
 
-    public class UserDialogViewModel : ViewModel
-    {
+    public class UserDialogViewModel : ViewModel {
         private readonly IUserDialogService dialogService;
 
 
-        public UserDialogViewModel (IUserDialogService dialogService)
-        {
+        public UserDialogViewModel(IUserDialogService dialogService) {
             this.dialogService = dialogService;
         }
 
         #region Bindings
 
         private string result;
-
         public string Result {
             get { return this.result; }
-            private set { this.SetProperty (ref this.result, value); }
+            private set { this.SetProperty(ref this.result, value); }
         }
 
 
         public ICommand Alert {
             get {
                 return new Command(async () => {
-                    await this.dialogService.AlertAsync ("Test alert", "Alert Title", "CHANGE ME!");
+                    await this.dialogService.AlertAsync("Test alert", "Alert Title", "CHANGE ME!");
                     this.Result = "Returned from alert!";
                 });
             }
@@ -43,12 +39,12 @@ namespace Samples.ViewModels
         public ICommand ActionSheet {
             get {
                 return new Command(() => {
-                    var cfg = new ActionSheetConfig().SetTitle ("Test Title");
+                    var cfg = new ActionSheetConfig().SetTitle("Test Title");
                     for (var i = 0; i < 10; i++) {
                         var display = (i + 1);
-                        cfg.Add ("Option " + display, () => this.Result = String.Format ("Option {0} Selected", display));
+                        cfg.Add("Option " + display, () => this.Result = String.Format("Option {0} Selected", display));
                     }
-                    this.dialogService.ActionSheet (cfg);
+                    this.dialogService.ActionSheet(cfg);
                 });
             }
         }
@@ -57,7 +53,7 @@ namespace Samples.ViewModels
         public ICommand Confirm {
             get {
                 return new Command(async () => {
-                    var r = await this.dialogService.ConfirmAsync ("Pick a choice", "Pick Title", "Yes", "No");
+                    var r = await this.dialogService.ConfirmAsync("Pick a choice", "Pick Title", "Yes", "No");
                     var text = (r ? "Yes" : "No");
                     this.Result = "Confirmation Choice: " + text;
                 });
@@ -68,8 +64,8 @@ namespace Samples.ViewModels
         public ICommand Login {
             get {
                 return new Command(async () => {
-                    var r = await this.dialogService.LoginAsync ();
-                    this.Result = String.Format (
+                    var r = await this.dialogService.LoginAsync();
+                    this.Result = String.Format(
                         "Login {0} - User Name: {1} - Password: {2}",
                         r.Ok ? "Success" : "Cancelled",
                         r.LoginText,
@@ -80,12 +76,12 @@ namespace Samples.ViewModels
         }
 
         public ICommand Prompt {
-            get { return this.PromptCommand (false); }
+            get { return this.PromptCommand(false); }
         }
 
 
         public ICommand PromptSecure {
-            get { return this.PromptCommand (true); }
+            get { return this.PromptCommand(true); }
         }
 
 
@@ -94,10 +90,10 @@ namespace Samples.ViewModels
                 return new Command(async () => {
                     var cancelled = false;
 
-                    using (var dlg = this.dialogService.Progress ("Test Progress")) {
-                        dlg.SetCancel (() => cancelled = true);
+                    using (var dlg = this.dialogService.Progress("Test Progress")) {
+                        dlg.SetCancel(() => cancelled = true);
                         while (!cancelled && dlg.PercentComplete < 100) {
-                            await Task.Delay (TimeSpan.FromMilliseconds (500));
+                            await Task.Delay(TimeSpan.FromMilliseconds(500));
                             dlg.PercentComplete += 2;
                         }
                     }
@@ -110,9 +106,9 @@ namespace Samples.ViewModels
         public ICommand ProgressNoCancel {
             get {
                 return new Command(async () => {
-                    using (var dlg = this.dialogService.Progress ("Progress (No Cancel)")) {
+                    using (var dlg = this.dialogService.Progress("Progress (No Cancel)")) {
                         while (dlg.PercentComplete < 100) {
-                            await Task.Delay (TimeSpan.FromSeconds (1));
+                            await Task.Delay(TimeSpan.FromSeconds(1));
                             dlg.PercentComplete += 20;
                         }
                     }
@@ -124,8 +120,8 @@ namespace Samples.ViewModels
         public ICommand LoadingNoCancel {
             get {
                 return new Command(async () => {
-                    using (this.dialogService.Loading ("Loading (No Cancel)"))
-                        await Task.Delay (TimeSpan.FromSeconds (3));
+                    using (this.dialogService.Loading("Loading (No Cancel)")) 
+                        await Task.Delay(TimeSpan.FromSeconds(3));
 
                     this.Result = "Loading Complete";
                 });
@@ -138,13 +134,13 @@ namespace Samples.ViewModels
                 return new Command(async () => {
                     var cancelSrc = new CancellationTokenSource();
 
-                    using (var dlg = this.dialogService.Loading ("Loading")) {
-                        dlg.SetCancel (cancelSrc.Cancel);
+                    using (var dlg = this.dialogService.Loading("Loading")) {
+                        dlg.SetCancel(cancelSrc.Cancel);
 
                         try { 
-                            await Task.Delay (TimeSpan.FromSeconds (5), cancelSrc.Token);
-                        } catch {
+                            await Task.Delay(TimeSpan.FromSeconds(5), cancelSrc.Token);
                         }
+                        catch { }
                     }
                     this.Result = (cancelSrc.IsCancellationRequested ? "Loading Cancelled" : "Loading Complete");
                 });
@@ -156,12 +152,13 @@ namespace Samples.ViewModels
             get {
                 return new Command(() => {
                     this.Result = "Toast Shown";
-                    this.dialogService.Toast ("Test Toast", onClick: () => {
+                    this.dialogService.Toast("Test Toast", onClick: () => {
                         this.Result = "Toast Pressed";
                     });
                 });
             }
         }
+
 
         public ICommand DisplaySuccess {
             get {
@@ -172,6 +169,7 @@ namespace Samples.ViewModels
             }
         }
 
+
         public ICommand DisplayError {
             get {
                 return new Command(() => {
@@ -181,20 +179,30 @@ namespace Samples.ViewModels
             }
         }
 
-        private string customText;
 
+        public ICommand DisplayImage {
+            get {
+                return new Command(() => {
+                    this.Result = "Image Shown";
+                    this.dialogService.ShowImage ("Samples.Images.Question.png", "Test Image");
+                });
+            }
+        }
+
+
+        private string customText;
         public string CustomText {
             get { return this.customText; }
-            set { this.SetProperty (ref this.customText, value); }
+            set { this.SetProperty(ref this.customText, value); }
         }
 
 
         public ICommand SingletonShowHide {
             get {
                 return new Command(async () => {
-                    this.dialogService.ShowLoading (this.CustomText);
-                    await Task.Delay (TimeSpan.FromSeconds (2));
-                    this.dialogService.HideLoading ();
+                    this.dialogService.ShowLoading(this.CustomText);
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    this.dialogService.HideLoading();
                 });
             }
         }
@@ -204,11 +212,10 @@ namespace Samples.ViewModels
 
         #region Internals
 
-        private ICommand PromptCommand (bool secure)
-        {
+        private ICommand PromptCommand(bool secure) {
             return new Command(async () => {
                 var type = (secure ? "secure text" : "text");
-                var r = await dialogService.PromptAsync (String.Format ("Enter a {0} value", type.ToUpper ()), secure: secure);
+                var r = await dialogService.PromptAsync(String.Format("Enter a {0} value", type.ToUpper()), secure: secure);
                 this.Result = (r.Ok
                     ? "OK " + r.Text
                     : secure + " Prompt Cancelled"

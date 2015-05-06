@@ -16,6 +16,8 @@ namespace Acr.XamForms.UserDialogs {
         public abstract void Toast(string message, int timeoutSeconds = 3, Action onClick = null);
         public abstract void ShowSuccess(string message, int timeoutSeconds = 3);
         public abstract void ShowError(string message, int timeoutSeconds = 3);
+        public abstract void ShowImage(string imagePath, string message, int timeoutSeconds = 3);
+
         protected abstract IProgressDialog CreateDialogInstance();
 
 

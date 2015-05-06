@@ -146,6 +146,13 @@ namespace Acr.XamForms.UserDialogs.iOS {
             });
         }
 
+        public override void ShowImage(string imagePath, string message, int timeoutSeconds = 3){
+            Device.BeginInvokeOnMainThread(() => {
+                var ms = timeoutSeconds * 1000;
+                BTProgressHUD.ShowImage(ImageSource.FromFile(imagePath), message, ms);
+            });
+        }
+
         public override void Prompt(PromptConfig config) {
             Device.BeginInvokeOnMainThread(() => {
                 var result = new PromptResult();

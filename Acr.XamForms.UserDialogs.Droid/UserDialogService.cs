@@ -170,6 +170,18 @@ namespace Acr.XamForms.UserDialogs.Droid {
             });
         }
 
+        public override void ShowImage(string imagePath, string message, int timeoutSeconds = 3){
+            Utils.RequestMainThread(() => {
+                AndHUD.Shared.ShowImage(
+                    Utils.GetActivityContext(), 
+                    ImageSource.FromFile(imagePath),
+                    message,
+                    MaskType.Clear,
+                    TimeSpan.FromSeconds(timeoutSeconds)
+                );
+            });
+        }
+
         protected override IProgressDialog CreateDialogInstance() {
             return new ProgressDialog();
         }

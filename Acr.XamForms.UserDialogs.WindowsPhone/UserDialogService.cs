@@ -171,14 +171,6 @@ namespace Acr.XamForms.UserDialogs.WindowsPhone {
 
         }
 
-        public override void ShowSuccess(string message, int timeoutSeconds = 3){
-            throw new NotImplentedException();
-        }
-
-        public override void ShowError(string message, int timeoutSeconds = 3){
-            throw new NotImplentedException();
-        }
-
         protected virtual void Dispatch(Action action) {
             Deployment.Current.Dispatcher.BeginInvoke(action);
         }
