@@ -171,6 +171,7 @@ namespace Acr.XamForms.UserDialogs.WindowsPhone {
 
         }
 
+
         protected virtual void Dispatch(Action action) {
             Deployment.Current.Dispatcher.BeginInvoke(action);
         }

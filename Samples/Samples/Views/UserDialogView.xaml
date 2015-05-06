@@ -21,8 +21,8 @@
                 <Button Text="Prompt (Secure)" Command="{Binding PromptSecure}" />
                 <Button Text="Toast" Command="{Binding Toast}" />
                 <Button Text="Success" Command="{Binding DisplaySuccess}" />
-				<Button Text="Error" Command="{Binding DisplayError}" />
-				<Button Text="Image" Command="{Binding DisplayImage}" />
+                <Button Text="Error" Command="{Binding DisplayError}" />
+                <Button Text="Image" Command="{Binding DisplayImage}" />
                 <Button Text="Loading" Command="{Binding Loading}" />
                 <Button Text="Loading (No Cancel)" Command="{Binding LoadingNoCancel}" />
                 <Button Text="Progress" Command="{Binding Progress}" />
