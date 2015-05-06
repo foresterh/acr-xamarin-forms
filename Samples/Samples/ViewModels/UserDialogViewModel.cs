@@ -184,7 +184,7 @@ namespace Samples.ViewModels {
             get {
                 return new Command(() => {
                     this.Result = "Image Shown";
-                    this.dialogService.ShowImage ("Samples.Images.Question.png", "Test Image");
+                    this.dialogService.ShowImage ("Samples.Images.question.png", "Test Image");
                 });
             }
         }

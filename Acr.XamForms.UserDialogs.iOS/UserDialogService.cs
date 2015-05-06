@@ -5,6 +5,7 @@ using Acr.XamForms.UserDialogs.iOS;
 using BigTed;
 using UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: Dependency(typeof(UserDialogService))]
 
@@ -149,7 +150,10 @@ namespace Acr.XamForms.UserDialogs.iOS {
         public override void ShowImage(string imagePath, string message, int timeoutSeconds = 3){
             Device.BeginInvokeOnMainThread(() => {
                 var ms = timeoutSeconds * 1000;
-                BTProgressHUD.ShowImage(ImageSource.FromFile(imagePath), message, ms);
+                var imageSource = ImageSource.FromResource (imagePath);
+                var handler = new FileImageSourceHandler();
+                var image = handler.LoadImageAsync (imageSource).Result;
+                BTProgressHUD.ShowImage(image, message, ms);
             });
         }
 
