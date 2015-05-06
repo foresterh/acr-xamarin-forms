@@ -148,6 +148,27 @@ namespace Acr.XamForms.UserDialogs.Droid {
             });
         }
 
+        public override void ShowSuccess(string message, int timeoutSeconds = 3){
+            Utils.RequestMainThread(() => {
+                AndHUD.Shared.ShowSuccess(
+                    Utils.GetActivityContext(), 
+                    message, 
+                    MaskType.Clear,
+                    TimeSpan.FromSeconds(timeoutSeconds)
+                );
+            });
+        }
+
+        public override void ShowError(string message, int timeoutSeconds = 3){
+            Utils.RequestMainThread(() => {
+                AndHUD.Shared.ShowError(
+                    Utils.GetActivityContext(), 
+                    message, 
+                    MaskType.Clear,
+                    TimeSpan.FromSeconds(timeoutSeconds)
+                );
+            });
+        }
 
         protected override IProgressDialog CreateDialogInstance() {
             return new ProgressDialog();
