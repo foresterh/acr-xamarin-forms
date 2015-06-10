@@ -170,7 +170,7 @@ namespace Acr.XamForms.UserDialogs.Droid {
             });
         }
 
-        public override void ShowImage(string imagePath, string message, int timeoutSeconds = 3){
+        public override void ShowImage(string imageResource, string message, int timeoutSeconds = 3){
             Utils.RequestMainThread(() => {
                 AndHUD.Shared.ShowImage(
                     Utils.GetActivityContext(), 

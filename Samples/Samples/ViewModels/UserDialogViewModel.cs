@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Acr.XamForms.UserDialogs;
 using Acr.XamForms.ViewModels;
 using Xamarin.Forms;
+using System.Reflection;
 
 
 namespace Samples.ViewModels {
@@ -15,6 +16,10 @@ namespace Samples.ViewModels {
 
         public UserDialogViewModel(IUserDialogService dialogService) {
             this.dialogService = dialogService;
+            var assembly = typeof(Samples.ViewModels.UserDialogViewModel).GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+                System.Diagnostics.Debug.WriteLine("found resource: " + res);
+            
         }
 
         #region Bindings

@@ -23,7 +23,7 @@ namespace Acr.XamForms.UserDialogs {
         void Toast(string message, int timeoutSeconds = 3, Action onClick = null);
         void ShowSuccess(string message, int timeoutSeconds = 3);
         void ShowError(string message, int timeoutSeconds = 3);
-        void ShowImage(string imagePath, string message, int timeoutSeconds = 3);
+        void ShowImage(string imageResource, string message, int timeoutSeconds = 3);
 
         Task AlertAsync(string message, string title = null, string okText = "OK");
         Task AlertAsync(AlertConfig config);

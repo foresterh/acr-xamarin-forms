@@ -147,11 +147,11 @@ namespace Acr.XamForms.UserDialogs.iOS {
             });
         }
 
-        public override void ShowImage(string imagePath, string message, int timeoutSeconds = 3){
+        public override void ShowImage(string imageResource, string message, int timeoutSeconds = 3){
             Device.BeginInvokeOnMainThread(() => {
                 var ms = timeoutSeconds * 1000;
-                var imageSource = ImageSource.FromResource (imagePath);
-                var handler = new FileImageSourceHandler();
+                var imageSource = ImageSource.FromResource (imageResource);
+                var handler = new StreamImagesourceHandler();
                 var image = handler.LoadImageAsync (imageSource).Result;
                 BTProgressHUD.ShowImage(image, message, ms);
             });
